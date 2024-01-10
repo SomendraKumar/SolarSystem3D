@@ -1,0 +1,37 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>My Test 1st Three JS Project Try it</title><style>body{margin:0}</style></head><body>      <script id="vShaderExpt-1" type="vertex">
+    // same var coming fron js file
+    uniform float u_time;
+    // use verying variable for displayed on the plan only not for surface
+    varying vec2 vUv;
+    void main()
+{    
+    vUv=uv;
+gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);
+}
+</script> <script id="fShaderExpt-1" type="fragment">
+    uniform float u_time;
+    uniform vec2 u_resolution;
+    uniform vec2 u_mouse;
+    uniform sampler2D image;
+    // use verying variable for 
+    varying vec2 vUv;
+    void main()
+{
+    vec2 st=gl_FragCoord.xy/u_resolution;
+    vec4 texture=texture2D(image,vUv);
+//gl_FragColor=vec4(0.0,u_mouse.x,st.y,1.0);//horizontally move mouse u can feel dark n lighter of color
+//gl_FragColor=vec4(0.0,u_mouse.y,st.y,1.0);//vertical move mouse u can feel dark n lighter of color
+
+// textured o/p
+//gl_FragColor=vec4(0.0,texture.g,0.0,1.0);// green zoom in zoom out n see the o/p awesome with green colored
+//gl_FragColor=vec4(texture.r,0.0,0.0,1.0);// red zoom in zoom out n see the o/p awesome with green colored
+//gl_FragColor=vec4(0.0,0.0,texture.b,1.0);// blue zoom in zoom out n see the o/p awesome with green colored
+//gl_FragColor=vec4(texture.r,0.0,texture.b,1.0);//two colors together means ,  zoom in zoom out n see the o/p awesome with green colored
+//gl_FragColor=vec4(texture.r,texture.g,texture.b,1.0);//all color together means as image same it will reflact due to 1,1,1 is white so,  zoom in zoom out n see the o/p awesome with green colored
+
+// some effects also u can put with time 
+float effect=abs(sin(texture.x+u_time));
+gl_FragColor=vec4(vec3(effect),1.0);
+
+}
+</script> <script src="./index.19060931.js" type="module"></script> </body></html>
